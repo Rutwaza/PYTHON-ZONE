@@ -1,4 +1,0 @@
-20[ENTER]
-like that[ENTER]
-or 20000[ENTER]
-??[RIGHT_SHIFT][ENTER]

@@ -23,7 +23,7 @@ def logo():
         {style.BRIGHT}{Fore.RED} Reach me IG : {Fore.BLUE} xmanhacky{Fore.ORANGE}
         ''')
 
-def load_proxies_from_file(file_path='proxies.txt'):
+def load_proxies_from_file(file_path='working_proxies.txt'):
     try:
         with open(file_path, 'r') as file:
             proxies = file.read().splitlines()
@@ -87,7 +87,7 @@ def main():
             return
 
     # Load proxies from the text file
-    proxies = load_proxies_from_file('proxies.txt')
+    proxies = load_proxies_from_file('working_proxies.txt')
     if not proxies:
         return
 
