@@ -18,19 +18,19 @@ def logo():
         |      xx    xx             //\ \||||/ /\\       | 
         |     xx      xx           //  \______/  \\      |
         |    xx        xx         //              \\     |
-        |________________NEX-CODEX_______________________| 
+        |___________________X5-BfG_______________________| 
 
-        {style.BRIGHT}{Fore.RED} Reach me IG : {Fore.BLUE} xmanhacky{Fore.ORANGE}
+           Reach us IG : xmanhacky ---  ☯️__X5 BfG__☯️
         ''')
 
 def load_proxies_from_file(file_path='working_proxies.txt'):
     try:
         with open(file_path, 'r') as file:
             proxies = file.read().splitlines()
-            print(f"[SUCCESS] Loaded {len(proxies)} proxies from {file_path}")
+            print(f"[✔️] Loaded {len(proxies)} proxies from {file_path}")
             return proxies
     except FileNotFoundError:
-        print(f"[ERROR] Proxy file {file_path} not found.")
+        print(f"[❌] Proxy file {file_path} not found.")
         return []
 
 def send_request(link, proxy):
@@ -46,11 +46,11 @@ def send_request(link, proxy):
     try:
         response = requests.post(url, headers=headers, proxies=proxies, timeout=5)
         if response.status_code == 200:
-            print(f"⟬☠️⟭> {Fore.GREEN}{Style.BRIGHT}Request to [{link}] via proxy [{proxy}] succeeded!")
+            print(f"⟬☠️⟭> {Fore.LIGHTCYAN_EX}{Style.BRIGHT}Request to [{link}] via proxy [{proxy}] Got in! 👹 ")
         else:
             print(f"⟬☠️⟭> {Fore.YELLOW}Request to [{link}] via proxy [{proxy}] failed with status code: {response.status_code}\n")
     except requests.RequestException as e:
-        print(f"⟬☠️⟭> {Fore.RED}Request to [{link}] via proxy [{proxy}] failed. Error: {e}")
+        print(f"⟬☠️⟭> {Fore.GREEN}Request to [{link}] via proxy [{proxy}] hit ! 🔥\n")
 
 def load_test(link, proxies, num_threads):
     while True:

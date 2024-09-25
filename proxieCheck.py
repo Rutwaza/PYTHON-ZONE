@@ -84,14 +84,14 @@ def verify_proxies(proxy_list, output_file='working_proxies.txt', timeout=5):
         print(Fore.YELLOW + "[INFO] No new working proxies found or all proxies already exist.")
 
 # Function to load proxies from a file
-def load_proxies_from_file(file_path='proxies.txt'):
+def load_proxies_from_file(file_path='proxies2.txt'):
     with open(file_path, 'r') as file:
         proxies = [line.strip() for line in file.readlines()]
     return proxies
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)  # Register the signal handler for Ctrl+C
-    proxy_file = 'proxies.txt'
+    proxy_file = 'proxies2.txt'
     test_url = 'http://httpbin.org/ip'  # Test URL to verify the proxies
 
     # Load proxies from file
